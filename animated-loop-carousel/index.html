@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Looping Slider</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+            position: relative;
+            /* overflow: hidden; */
+        }
+
+        .slider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            transition: transform 0.5s ease;
+        }
+
+        .slide {
+            min-width: 250px;
+            position: relative;
+            transition: transform 0.5s ease, z-index 0.5s ease;
+        }
+
+        .slide:nth-child(1) { transform: rotate(-10deg) translateX(-120px) translateY(10px); z-index: 1; }
+        .slide:nth-child(2) { transform: rotate(-5deg) translateX(-60px) translateY(10px); z-index: 2; }
+        .slide:nth-child(3) { transform: rotate(0deg) translateY(-15px); z-index: 3; }
+        .slide:nth-child(4) { transform: rotate(5deg) translateX(60px) translateY(10px); z-index: 2; }
+        .slide:nth-child(5) { transform: rotate(10deg) translateX(120px) translateY(10px); z-index: 1; }
+
+        .card {
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="slider-container">
+    <div class="slider">
+        <div class="slide">
+            <div class="card">
+                <img src="avatar1.png" alt="User Image">
+                <h3>1111</h3>
+                <p>Jenny Wilson</p>
+                <p>Sample text for card 1.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="card">
+                <img src="avatar2.png" alt="User Image">
+                <h3>2222</h3>
+                <p>Jenny Wilson</p>
+                <p>Sample text for card 2.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="card">
+                <img src="avatar3.png" alt="User Image">
+                <h3>3333</h3>
+                <p>Jenny Wilson</p>
+                <p>Sample text for card 3.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="card">
+                <img src="avatar4.png" alt="User Image">
+                <h3>4444</h3>
+                <p>Jenny Wilson</p>
+                <p>Sample text for card 4.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <div class="card">
+                <img src="avatar5.png" alt="User Image">
+                <h3>5555</h3>
+                <p>Jenny Wilson</p>
+                <p>Sample text for card 5.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const slider = document.querySelector('.slider');
+    const slides = Array.from(document.querySelectorAll('.slide'));
+
+    function updatePositions() {
+        // Adjust the positions of the slides
+        slides.forEach((slide, index) => {
+            slide.style.transition = 'transform 0.5s ease, z-index 0.5s ease';
+            slide.style.transform = slides[(index + 4) % 5].style.transform;
+            slide.style.zIndex = slides[(index + 4) % 5].style.zIndex;
+        });
+
+        // Rearrange the slides array order
+        const firstSlide = slides.shift();
+        slides.push(firstSlide);
+
+        setTimeout(() => {
+            firstSlide.style.transition = 'none';
+            firstSlide.style.transform = slides[4].style.transform;
+            firstSlide.style.zIndex = slides[4].style.zIndex;
+            slider.appendChild(firstSlide);
+        }, 500);
+    }
+
+    setInterval(updatePositions, 2000);
+</script>
+
+</body>
+</html>
+
